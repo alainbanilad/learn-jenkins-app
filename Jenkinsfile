@@ -46,17 +46,18 @@ pipeline {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
+                    args '-u 0:0'
                 }
             }
             steps {
                 sh '''
-                    # Install bash and any other necessary dependencies for Netlify
-                    apk add --no-cache bash
-                    npm install netlify-cli
-                    node_modules/.bin/netlify --version
-                    echo "Deploying to production. Site ID: $NETLIFY_SITE_ID"
-                    node_modules/.bin/netlify status
-                    node_modules/.bin/netlify deploy --dir=build --prod
+                    # Install bash and any other necessary dependencies for Netlify &&
+                    apk add --no-cache bash &&
+                    npm install netlify-cli &&
+                    node_modules/.bin/netlify --version &&
+                    echo "Deploying to production. Site ID: $NETLIFY_SITE_ID" &&
+                    node_modules/.bin/netlify status &&
+                    node_modules/.bin/netlify deploy --dir=build --prod &&
                 '''
             }
         }
