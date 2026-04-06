@@ -50,6 +50,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    # Install bash and any other necessary dependencies for Netlify
                     apk add --no-cache bash
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
